@@ -1,0 +1,34 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+int cont = 0;
+
+int security(string value) {
+    int tam = value.length();
+
+    if (value == "") {
+        return (cont);
+    }
+
+    // Enquanto o último dígito for diferente de '0'
+    while (value[tam - 1] != '0') {
+        value[tam - 1] = (value[tam - 1] == '0') ? '9' : value[tam - 1] - 1;
+        cont++;
+
+        for (int i = 0; i < tam - 1; i++) {
+            // Aplica a operação inversa do botão B para os dígitos anteriores
+            value[i] = (value[i] == '0') ? '9' : value[i] - 1;
+        }
+    }
+
+    // Quando o último dígito for '0', simula "remover" esse 0 (operação A inversa)
+    return security(value.substr(0, tam - 1));
+}
+
+int main() {
+    string n;
+    cin >> n;
+    
+    cout << security(n)+n.length() << endl;
+}
